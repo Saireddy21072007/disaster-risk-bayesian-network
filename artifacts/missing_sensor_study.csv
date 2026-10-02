@@ -1,0 +1,17 @@
+missing_rate,model,Flood,Landslide,Cyclone,Heatwave
+0%,BN-Bayes (expert prior),0.8907,0.9118,0.9235,0.9292
+0%,LogisticRegression,0.9122,0.918,0.9516,0.987
+0%,RandomForest,0.9011,0.9142,0.9469,0.983
+0%,GradientBoosting,0.9077,0.9199,0.9462,0.9858
+20%,BN-Bayes (expert prior),0.8831,0.9064,0.9201,0.9335
+20%,LogisticRegression,0.8826,0.9062,0.9297,0.9185
+20%,RandomForest,0.8856,0.9012,0.927,0.9546
+20%,GradientBoosting,0.8884,0.902,0.9193,0.872
+40%,BN-Bayes (expert prior),0.8753,0.9037,0.8933,0.9272
+40%,LogisticRegression,0.8368,0.8921,0.8965,0.8485
+40%,RandomForest,0.8609,0.8845,0.8808,0.9256
+40%,GradientBoosting,0.8609,0.8891,0.8811,0.7726
+60%,BN-Bayes (expert prior),0.8628,0.8956,0.8655,0.9279
+60%,LogisticRegression,0.7887,0.8736,0.8538,0.7752
+60%,RandomForest,0.8124,0.8448,0.8069,0.9063
+60%,GradientBoosting,0.7911,0.8596,0.8099,0.6667

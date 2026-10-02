@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_45d2910ebd0d6269ce84dce17dda2d0d {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    <div style='position:fixed;top:10px;left:60px;z-index:9999;background:white;padding:6px 12px;border-radius:6px;font:600 14px sans-serif;box-shadow:0 1px 4px #0003'>Cyclonic storm approaching the east coast</div>
+    
+    <div style="position:fixed;bottom:20px;left:20px;z-index:9999;background:white;
+                padding:8px 12px;border-radius:6px;font:12px sans-serif;
+                box-shadow:0 1px 4px #0003">
+      <b>Top-hazard probability</b><br>
+      <span style="color:#d7301f">&#9679;</span> High (&ge;75%)&nbsp;
+      <span style="color:#fdae61">&#9679;</span> Medium&nbsp;
+      <span style="color:#1a9850">&#9679;</span> Low<br>
+      hollow ring = a sensor is offline
+    </div>
+    
+            <div class="folium-map" id="map_45d2910ebd0d6269ce84dce17dda2d0d" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_45d2910ebd0d6269ce84dce17dda2d0d = L.map(
+                "map_45d2910ebd0d6269ce84dce17dda2d0d",
+                {
+                    center: [12.4, 78.5],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 6,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_45d2910ebd0d6269ce84dce17dda2d0d);
+
+            
+
+        
+    
+            var tile_layer_64e8da6ab9082f2ce6cbf934729ec57a = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_64e8da6ab9082f2ce6cbf934729ec57a.addTo(map_45d2910ebd0d6269ce84dce17dda2d0d);
+        
+    
+            var circle_marker_9e4e428451fe33012396befcf0747618 = L.circleMarker(
+                [9.9816, 76.2999],
+                {"bubblingMouseEvents": true, "color": "#1a9850", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a9850", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.935203269559429, "stroke": true, "weight": 1.5}
+            ).addTo(map_45d2910ebd0d6269ce84dce17dda2d0d);
+        
+    
+        var popup_71bb414fe640ea636ea765b4e6e97666 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_5f6d033a7e5a0d455af97f755d7f827b = $(`<div id="html_5f6d033a7e5a0d455af97f755d7f827b" style="width: 100.0%; height: 100.0%;">             <div style="font:13px/1.5 sans-serif;min-width:250px">               <b style="font-size:15px">Ernakulam</b>, Kerala<br>                              <table style="width:100%;margin:6px 0"><tr><td>Flood</td><td style='text-align:right'>12%</td></tr><tr><td>Cyclone</td><td style='text-align:right'>11%</td></tr><tr><td>Landslide</td><td style='text-align:right'>2%</td></tr><tr><td>Heatwave</td><td style='text-align:right'>0%</td></tr></table>               <b>Action:</b> Prepare<br>               <b>Rescue / hospital surge:</b> 17%<br>               <b>Shelter:</b> Govt. Higher Secondary School Kalamassery<br>               <span style="color:#666">rain 33.7 mm &middot;               28.6 C &middot; wind 29.7 kmph</span>             </div></div>`)[0];
+                popup_71bb414fe640ea636ea765b4e6e97666.setContent(html_5f6d033a7e5a0d455af97f755d7f827b);
+            
+        
+
+        circle_marker_9e4e428451fe33012396befcf0747618.bindPopup(popup_71bb414fe640ea636ea765b4e6e97666)
+        ;
+
+        
+    
+    
+            circle_marker_9e4e428451fe33012396befcf0747618.bindTooltip(
+                `<div>
+                     Ernakulam: Flood 12% (Low)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_48274f43c36f72ed2926c969e643b157 = L.circleMarker(
+                [9.8497, 76.9681],
+                {"bubblingMouseEvents": true, "color": "#1a9850", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a9850", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8.669675299658712, "stroke": true, "weight": 1.5}
+            ).addTo(map_45d2910ebd0d6269ce84dce17dda2d0d);
+        
+    
+        var popup_23fa41fff482db876d0b865d1ce6fae0 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_d64adc9fd9ba02dead57866ff6df8e9c = $(`<div id="html_d64adc9fd9ba02dead57866ff6df8e9c" style="width: 100.0%; height: 100.0%;">             <div style="font:13px/1.5 sans-serif;min-width:250px">               <b style="font-size:15px">Idukki</b>, Kerala<br>                              <table style="width:100%;margin:6px 0"><tr><td>Landslide</td><td style='text-align:right'>4%</td></tr><tr><td>Flood</td><td style='text-align:right'>2%</td></tr><tr><td>Cyclone</td><td style='text-align:right'>1%</td></tr><tr><td>Heatwave</td><td style='text-align:right'>0%</td></tr></table>               <b>Action:</b> Monitor<br>               <b>Rescue / hospital surge:</b> 6%<br>               <b>Shelter:</b> Govt. Tribal School Kattappana<br>               <span style="color:#666">rain 5.5 mm &middot;               26.6 C &middot; wind 14.7 kmph</span>             </div></div>`)[0];
+                popup_23fa41fff482db876d0b865d1ce6fae0.setContent(html_d64adc9fd9ba02dead57866ff6df8e9c);
+            
+        
+
+        circle_marker_48274f43c36f72ed2926c969e643b157.bindPopup(popup_23fa41fff482db876d0b865d1ce6fae0)
+        ;
+
+        
+    
+    
+            circle_marker_48274f43c36f72ed2926c969e643b157.bindTooltip(
+                `<div>
+                     Idukki: Landslide 4% (Low)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3a33d20c4d09dc5dd344fbf59a1db614 = L.circleMarker(
+                [11.6854, 76.132],
+                {"bubblingMouseEvents": true, "color": "#1a9850", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a9850", "fillOpacity": 0.12, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.792409041898846, "stroke": true, "weight": 3}
+            ).addTo(map_45d2910ebd0d6269ce84dce17dda2d0d);
+        
+    
+        var popup_ccfa6f2965f267d9c540eb82dd86adf4 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_1a3d2cb6a9141604ec04e2769c9d051c = $(`<div id="html_1a3d2cb6a9141604ec04e2769c9d051c" style="width: 100.0%; height: 100.0%;">             <div style="font:13px/1.5 sans-serif;min-width:250px">               <b style="font-size:15px">Wayanad</b>, Kerala<br>               <div style='color:#b26a00'>river gauge not reporting</div>               <table style="width:100%;margin:6px 0"><tr><td>Flood</td><td style='text-align:right'>11%</td></tr><tr><td>Landslide</td><td style='text-align:right'>9%</td></tr><tr><td>Cyclone</td><td style='text-align:right'>1%</td></tr><tr><td>Heatwave</td><td style='text-align:right'>0%</td></tr></table>               <b>Action:</b> Advisory<br>               <b>Rescue / hospital surge:</b> 16%<br>               <b>Shelter:</b> Govt. College Mananthavady<br>               <span style="color:#666">rain 27.0 mm &middot;               29.3 C &middot; wind 17.1 kmph</span>             </div></div>`)[0];
+                popup_ccfa6f2965f267d9c540eb82dd86adf4.setContent(html_1a3d2cb6a9141604ec04e2769c9d051c);
+            
+        
+
+        circle_marker_3a33d20c4d09dc5dd344fbf59a1db614.bindPopup(popup_ccfa6f2965f267d9c540eb82dd86adf4)
+        ;
+
+        
+    
+    
+            circle_marker_3a33d20c4d09dc5dd344fbf59a1db614.bindTooltip(
+                `<div>
+                     Wayanad: Flood 11% (Low)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2c5577f3b66067a2a2b707b56aedb228 = L.circleMarker(
+                [9.4981, 76.3388],
+                {"bubblingMouseEvents": true, "color": "#1a9850", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a9850", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.935203269559429, "stroke": true, "weight": 1.5}
+            ).addTo(map_45d2910ebd0d6269ce84dce17dda2d0d);
+        
+    
+        var popup_50cdb31a7c6fa9913280397911ddea4e = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_e1a378206aa8b87b3d4eb2cc49ea7fb3 = $(`<div id="html_e1a378206aa8b87b3d4eb2cc49ea7fb3" style="width: 100.0%; height: 100.0%;">             <div style="font:13px/1.5 sans-serif;min-width:250px">               <b style="font-size:15px">Alappuzha</b>, Kerala<br>                              <table style="width:100%;margin:6px 0"><tr><td>Flood</td><td style='text-align:right'>12%</td></tr><tr><td>Cyclone</td><td style='text-align:right'>11%</td></tr><tr><td>Landslide</td><td style='text-align:right'>2%</td></tr><tr><td>Heatwave</td><td style='text-align:right'>0%</td></tr></table>               <b>Action:</b> Prepare<br>               <b>Rescue / hospital surge:</b> 17%<br>               <b>Shelter:</b> Municipal Town Hall Alappuzha<br>               <span style="color:#666">rain 41.3 mm &middot;               27.9 C &middot; wind 22.9 kmph</span>             </div></div>`)[0];
+                popup_50cdb31a7c6fa9913280397911ddea4e.setContent(html_e1a378206aa8b87b3d4eb2cc49ea7fb3);
+            
+        
+
+        circle_marker_2c5577f3b66067a2a2b707b56aedb228.bindPopup(popup_50cdb31a7c6fa9913280397911ddea4e)
+        ;
+
+        
+    
+    
+            circle_marker_2c5577f3b66067a2a2b707b56aedb228.bindTooltip(
+                `<div>
+                     Alappuzha: Flood 12% (Low)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8cd44f906632e9b43fbf59bc6760c049 = L.circleMarker(
+                [10.5276, 76.2144],
+                {"bubblingMouseEvents": true, "color": "#1a9850", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a9850", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8.55935166282762, "stroke": true, "weight": 1.5}
+            ).addTo(map_45d2910ebd0d6269ce84dce17dda2d0d);
+        
+    
+        var popup_5313f909aaf4ba2df4fab5451d7d742f = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_62ff5f2e07c9b92efff34e9c9cc3606a = $(`<div id="html_62ff5f2e07c9b92efff34e9c9cc3606a" style="width: 100.0%; height: 100.0%;">             <div style="font:13px/1.5 sans-serif;min-width:250px">               <b style="font-size:15px">Thrissur</b>, Kerala<br>                              <table style="width:100%;margin:6px 0"><tr><td>Flood</td><td style='text-align:right'>3%</td></tr><tr><td>Landslide</td><td style='text-align:right'>0%</td></tr><tr><td>Cyclone</td><td style='text-align:right'>0%</td></tr><tr><td>Heatwave</td><td style='text-align:right'>0%</td></tr></table>               <b>Action:</b> Monitor<br>               <b>Rescue / hospital surge:</b> 4%<br>               <b>Shelter:</b> Govt. Model Boys School Thrissur<br>               <span style="color:#666">rain 6.6 mm &middot;               27.7 C &middot; wind 16.4 kmph</span>             </div></div>`)[0];
+                popup_5313f909aaf4ba2df4fab5451d7d742f.setContent(html_62ff5f2e07c9b92efff34e9c9cc3606a);
+            
+        
+
+        circle_marker_8cd44f906632e9b43fbf59bc6760c049.bindPopup(popup_5313f909aaf4ba2df4fab5451d7d742f)
+        ;
+
+        
+    
+    
+            circle_marker_8cd44f906632e9b43fbf59bc6760c049.bindTooltip(
+                `<div>
+                     Thrissur: Flood 3% (Low)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_aa78eeb375944a62a534c63cf0d2a214 = L.circleMarker(
+                [11.2588, 75.7804],
+                {"bubblingMouseEvents": true, "color": "#1a9850", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a9850", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.764913285811264, "stroke": true, "weight": 1.5}
+            ).addTo(map_45d2910ebd0d6269ce84dce17dda2d0d);
+        
+    
+        var popup_4bad0839cf81daa8f2da60d01b2ae346 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_44e898de5f4c089e8db3decf1950c0eb = $(`<div id="html_44e898de5f4c089e8db3decf1950c0eb" style="width: 100.0%; height: 100.0%;">             <div style="font:13px/1.5 sans-serif;min-width:250px">               <b style="font-size:15px">Kozhikode</b>, Kerala<br>                              <table style="width:100%;margin:6px 0"><tr><td>Cyclone</td><td style='text-align:right'>11%</td></tr><tr><td>Flood</td><td style='text-align:right'>3%</td></tr><tr><td>Landslide</td><td style='text-align:right'>0%</td></tr><tr><td>Heatwave</td><td style='text-align:right'>0%</td></tr></table>               <b>Action:</b> Advisory<br>               <b>Rescue / hospital surge:</b> 11%<br>               <b>Shelter:</b> Govt. Girls HSS Kozhikode<br>               <span style="color:#666">rain 14.4 mm &middot;               27.0 C &middot; wind 29.9 kmph</span>             </div></div>`)[0];
+                popup_4bad0839cf81daa8f2da60d01b2ae346.setContent(html_44e898de5f4c089e8db3decf1950c0eb);
+            
+        
+
+        circle_marker_aa78eeb375944a62a534c63cf0d2a214.bindPopup(popup_4bad0839cf81daa8f2da60d01b2ae346)
+        ;
+
+        
+    
+    
+            circle_marker_aa78eeb375944a62a534c63cf0d2a214.bindTooltip(
+                `<div>
+                     Kozhikode: Cyclone 11% (Low)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c216bbcc77f473953956afaabbe10512 = L.circleMarker(
+                [11.0168, 76.9558],
+                {"bubblingMouseEvents": true, "color": "#1a9850", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a9850", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.935203269559429, "stroke": true, "weight": 1.5}
+            ).addTo(map_45d2910ebd0d6269ce84dce17dda2d0d);
+        
+    
+        var popup_8ab7264fe1e4db5edc2ed8e7eced5aad = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_dae1283361c13a49e5e8815d04a97383 = $(`<div id="html_dae1283361c13a49e5e8815d04a97383" style="width: 100.0%; height: 100.0%;">             <div style="font:13px/1.5 sans-serif;min-width:250px">               <b style="font-size:15px">Coimbatore</b>, TamilNadu<br>                              <table style="width:100%;margin:6px 0"><tr><td>Flood</td><td style='text-align:right'>12%</td></tr><tr><td>Landslide</td><td style='text-align:right'>8%</td></tr><tr><td>Cyclone</td><td style='text-align:right'>0%</td></tr><tr><td>Heatwave</td><td style='text-align:right'>0%</td></tr></table>               <b>Action:</b> Advisory<br>               <b>Rescue / hospital surge:</b> 15%<br>               <b>Shelter:</b> Corporation School Peelamedu<br>               <span style="color:#666">rain 19.5 mm &middot;               29.8 C &middot; wind 16.2 kmph</span>             </div></div>`)[0];
+                popup_8ab7264fe1e4db5edc2ed8e7eced5aad.setContent(html_dae1283361c13a49e5e8815d04a97383);
+            
+        
+
+        circle_marker_c216bbcc77f473953956afaabbe10512.bindPopup(popup_8ab7264fe1e4db5edc2ed8e7eced5aad)
+        ;
+
+        
+    
+    
+            circle_marker_c216bbcc77f473953956afaabbe10512.bindTooltip(
+                `<div>
+                     Coimbatore: Flood 12% (Low)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d792612cf45a1f1a7f75d7a065e9cfe2 = L.circleMarker(
+                [11.4102, 76.695],
+                {"bubblingMouseEvents": true, "color": "#1a9850", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a9850", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8.669675299658712, "stroke": true, "weight": 1.5}
+            ).addTo(map_45d2910ebd0d6269ce84dce17dda2d0d);
+        
+    
+        var popup_00272f72734a4779f9026d1ca7b4fc0c = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_d2cc93c2196b85c38bf14f55d66cb346 = $(`<div id="html_d2cc93c2196b85c38bf14f55d66cb346" style="width: 100.0%; height: 100.0%;">             <div style="font:13px/1.5 sans-serif;min-width:250px">               <b style="font-size:15px">Nilgiris</b>, TamilNadu<br>                              <table style="width:100%;margin:6px 0"><tr><td>Landslide</td><td style='text-align:right'>4%</td></tr><tr><td>Flood</td><td style='text-align:right'>2%</td></tr><tr><td>Cyclone</td><td style='text-align:right'>1%</td></tr><tr><td>Heatwave</td><td style='text-align:right'>0%</td></tr></table>               <b>Action:</b> Monitor<br>               <b>Rescue / hospital surge:</b> 6%<br>               <b>Shelter:</b> Govt. Arts College Ooty<br>               <span style="color:#666">rain 14.2 mm &middot;               27.8 C &middot; wind 20.1 kmph</span>             </div></div>`)[0];
+                popup_00272f72734a4779f9026d1ca7b4fc0c.setContent(html_d2cc93c2196b85c38bf14f55d66cb346);
+            
+        
+
+        circle_marker_d792612cf45a1f1a7f75d7a065e9cfe2.bindPopup(popup_00272f72734a4779f9026d1ca7b4fc0c)
+        ;
+
+        
+    
+    
+            circle_marker_d792612cf45a1f1a7f75d7a065e9cfe2.bindTooltip(
+                `<div>
+                     Nilgiris: Landslide 4% (Low)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ade999cef77c47e0bc6f85f29bb36419 = L.circleMarker(
+                [13.0827, 80.2707],
+                {"bubblingMouseEvents": true, "color": "#d7301f", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#d7301f", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 23.642068881678743, "stroke": true, "weight": 1.5}
+            ).addTo(map_45d2910ebd0d6269ce84dce17dda2d0d);
+        
+    
+        var popup_2711e28c644dd15b3052ffdda162b7b9 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_8d2213a68b2d3782e8fd6b36eab32be8 = $(`<div id="html_8d2213a68b2d3782e8fd6b36eab32be8" style="width: 100.0%; height: 100.0%;">             <div style="font:13px/1.5 sans-serif;min-width:250px">               <b style="font-size:15px">Chennai</b>, TamilNadu<br>                              <table style="width:100%;margin:6px 0"><tr><td>Cyclone</td><td style='text-align:right'>98%</td></tr><tr><td>Flood</td><td style='text-align:right'>22%</td></tr><tr><td>Landslide</td><td style='text-align:right'>8%</td></tr><tr><td>Heatwave</td><td style='text-align:right'>0%</td></tr></table>               <b>Action:</b> Evacuate<br>               <b>Rescue / hospital surge:</b> 71%<br>               <b>Shelter:</b> Chennai Corporation Community Hall<br>               <span style="color:#666">rain 95.8 mm &middot;               27.4 C &middot; wind 95.8 kmph</span>             </div></div>`)[0];
+                popup_2711e28c644dd15b3052ffdda162b7b9.setContent(html_8d2213a68b2d3782e8fd6b36eab32be8);
+            
+        
+
+        circle_marker_ade999cef77c47e0bc6f85f29bb36419.bindPopup(popup_2711e28c644dd15b3052ffdda162b7b9)
+        ;
+
+        
+    
+    
+            circle_marker_ade999cef77c47e0bc6f85f29bb36419.bindTooltip(
+                `<div>
+                     Chennai: Cyclone 98% (High)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f1eec5342709f3cfb64f3d0301484532 = L.circleMarker(
+                [11.748, 79.7714],
+                {"bubblingMouseEvents": true, "color": "#d7301f", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#d7301f", "fillOpacity": 0.12, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 23.642068881678743, "stroke": true, "weight": 3}
+            ).addTo(map_45d2910ebd0d6269ce84dce17dda2d0d);
+        
+    
+        var popup_51f9c67a69314977a3685e37f30c3e18 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_c8a2ddbc6d338cbfdc8154c8f1a1ce31 = $(`<div id="html_c8a2ddbc6d338cbfdc8154c8f1a1ce31" style="width: 100.0%; height: 100.0%;">             <div style="font:13px/1.5 sans-serif;min-width:250px">               <b style="font-size:15px">Cuddalore</b>, TamilNadu<br>               <div style='color:#b26a00'>river gauge not reporting</div>               <table style="width:100%;margin:6px 0"><tr><td>Cyclone</td><td style='text-align:right'>98%</td></tr><tr><td>Flood</td><td style='text-align:right'>53%</td></tr><tr><td>Landslide</td><td style='text-align:right'>9%</td></tr><tr><td>Heatwave</td><td style='text-align:right'>0%</td></tr></table>               <b>Action:</b> Evacuate<br>               <b>Rescue / hospital surge:</b> 79%<br>               <b>Shelter:</b> Govt. Boys HSS Cuddalore<br>               <span style="color:#666">rain 85.8 mm &middot;               27.5 C &middot; wind 95.6 kmph</span>             </div></div>`)[0];
+                popup_51f9c67a69314977a3685e37f30c3e18.setContent(html_c8a2ddbc6d338cbfdc8154c8f1a1ce31);
+            
+        
+
+        circle_marker_f1eec5342709f3cfb64f3d0301484532.bindPopup(popup_51f9c67a69314977a3685e37f30c3e18)
+        ;
+
+        
+    
+    
+            circle_marker_f1eec5342709f3cfb64f3d0301484532.bindTooltip(
+                `<div>
+                     Cuddalore: Cyclone 98% (High)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_22783ea4524f9c001cd63a1427f29340 = L.circleMarker(
+                [9.9252, 78.1198],
+                {"bubblingMouseEvents": true, "color": "#1a9850", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a9850", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.935203269559429, "stroke": true, "weight": 1.5}
+            ).addTo(map_45d2910ebd0d6269ce84dce17dda2d0d);
+        
+    
+        var popup_896945d12dd730b985d879d6039ac583 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_d1d8cc951ce742c22c524c56a8321cc7 = $(`<div id="html_d1d8cc951ce742c22c524c56a8321cc7" style="width: 100.0%; height: 100.0%;">             <div style="font:13px/1.5 sans-serif;min-width:250px">               <b style="font-size:15px">Madurai</b>, TamilNadu<br>                              <table style="width:100%;margin:6px 0"><tr><td>Flood</td><td style='text-align:right'>12%</td></tr><tr><td>Landslide</td><td style='text-align:right'>2%</td></tr><tr><td>Cyclone</td><td style='text-align:right'>1%</td></tr><tr><td>Heatwave</td><td style='text-align:right'>0%</td></tr></table>               <b>Action:</b> Advisory<br>               <b>Rescue / hospital surge:</b> 11%<br>               <b>Shelter:</b> Govt. Rajaji Hospital Annex<br>               <span style="color:#666">rain 28.6 mm &middot;               28.8 C &middot; wind 25.3 kmph</span>             </div></div>`)[0];
+                popup_896945d12dd730b985d879d6039ac583.setContent(html_d1d8cc951ce742c22c524c56a8321cc7);
+            
+        
+
+        circle_marker_22783ea4524f9c001cd63a1427f29340.bindPopup(popup_896945d12dd730b985d879d6039ac583)
+        ;
+
+        
+    
+    
+            circle_marker_22783ea4524f9c001cd63a1427f29340.bindTooltip(
+                `<div>
+                     Madurai: Flood 12% (Low)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9800918f1177306f75f5a76674de679c = L.circleMarker(
+                [8.7139, 77.7567],
+                {"bubblingMouseEvents": true, "color": "#1a9850", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a9850", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.287708522918239, "stroke": true, "weight": 1.5}
+            ).addTo(map_45d2910ebd0d6269ce84dce17dda2d0d);
+        
+    
+        var popup_3f39c7e572e79eabff8c6c5e96c1dc8e = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_619a2958fd9a5766d03cf94aeab14454 = $(`<div id="html_619a2958fd9a5766d03cf94aeab14454" style="width: 100.0%; height: 100.0%;">             <div style="font:13px/1.5 sans-serif;min-width:250px">               <b style="font-size:15px">Tirunelveli</b>, TamilNadu<br>                              <table style="width:100%;margin:6px 0"><tr><td>Landslide</td><td style='text-align:right'>8%</td></tr><tr><td>Flood</td><td style='text-align:right'>6%</td></tr><tr><td>Cyclone</td><td style='text-align:right'>1%</td></tr><tr><td>Heatwave</td><td style='text-align:right'>0%</td></tr></table>               <b>Action:</b> Advisory<br>               <b>Rescue / hospital surge:</b> 12%<br>               <b>Shelter:</b> Govt. HSS Palayamkottai<br>               <span style="color:#666">rain 27.3 mm &middot;               28.5 C &middot; wind 19.2 kmph</span>             </div></div>`)[0];
+                popup_3f39c7e572e79eabff8c6c5e96c1dc8e.setContent(html_619a2958fd9a5766d03cf94aeab14454);
+            
+        
+
+        circle_marker_9800918f1177306f75f5a76674de679c.bindPopup(popup_3f39c7e572e79eabff8c6c5e96c1dc8e)
+        ;
+
+        
+    
+    
+            circle_marker_9800918f1177306f75f5a76674de679c.bindTooltip(
+                `<div>
+                     Tirunelveli: Landslide 8% (Low)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5741c9de33beb3d9b1423e05bc231bfd = L.circleMarker(
+                [16.5062, 80.648],
+                {"bubblingMouseEvents": true, "color": "#d7301f", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#d7301f", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 23.642068881678743, "stroke": true, "weight": 1.5}
+            ).addTo(map_45d2910ebd0d6269ce84dce17dda2d0d);
+        
+    
+        var popup_662aff85d5ec26f615a9f254320765d6 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_760b8d34ce269de43c57f2196934b66e = $(`<div id="html_760b8d34ce269de43c57f2196934b66e" style="width: 100.0%; height: 100.0%;">             <div style="font:13px/1.5 sans-serif;min-width:250px">               <b style="font-size:15px">Krishna</b>, AndhraPradesh<br>                              <table style="width:100%;margin:6px 0"><tr><td>Cyclone</td><td style='text-align:right'>98%</td></tr><tr><td>Flood</td><td style='text-align:right'>66%</td></tr><tr><td>Landslide</td><td style='text-align:right'>9%</td></tr><tr><td>Heatwave</td><td style='text-align:right'>0%</td></tr></table>               <b>Action:</b> Evacuate<br>               <b>Rescue / hospital surge:</b> 82%<br>               <b>Shelter:</b> Govt. Polytechnic Vijayawada<br>               <span style="color:#666">rain 96.8 mm &middot;               28.6 C &middot; wind 88.6 kmph</span>             </div></div>`)[0];
+                popup_662aff85d5ec26f615a9f254320765d6.setContent(html_760b8d34ce269de43c57f2196934b66e);
+            
+        
+
+        circle_marker_5741c9de33beb3d9b1423e05bc231bfd.bindPopup(popup_662aff85d5ec26f615a9f254320765d6)
+        ;
+
+        
+    
+    
+            circle_marker_5741c9de33beb3d9b1423e05bc231bfd.bindTooltip(
+                `<div>
+                     Krishna: Cyclone 98% (High)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d21e1e09677c335f297cd7414137ebc3 = L.circleMarker(
+                [17.6868, 83.2185],
+                {"bubblingMouseEvents": true, "color": "#d7301f", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#d7301f", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 23.642068881678743, "stroke": true, "weight": 1.5}
+            ).addTo(map_45d2910ebd0d6269ce84dce17dda2d0d);
+        
+    
+        var popup_920922edd78703790ddc779358ce0599 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_aedcbb2b75eb24487ed621442b67c665 = $(`<div id="html_aedcbb2b75eb24487ed621442b67c665" style="width: 100.0%; height: 100.0%;">             <div style="font:13px/1.5 sans-serif;min-width:250px">               <b style="font-size:15px">Visakhapatnam</b>, AndhraPradesh<br>                              <table style="width:100%;margin:6px 0"><tr><td>Cyclone</td><td style='text-align:right'>98%</td></tr><tr><td>Landslide</td><td style='text-align:right'>46%</td></tr><tr><td>Flood</td><td style='text-align:right'>22%</td></tr><tr><td>Heatwave</td><td style='text-align:right'>0%</td></tr></table>               <b>Action:</b> Evacuate<br>               <b>Rescue / hospital surge:</b> 80%<br>               <b>Shelter:</b> AU Engineering College Hostel<br>               <span style="color:#666">rain 109.5 mm &middot;               28.6 C &middot; wind 91.4 kmph</span>             </div></div>`)[0];
+                popup_920922edd78703790ddc779358ce0599.setContent(html_aedcbb2b75eb24487ed621442b67c665);
+            
+        
+
+        circle_marker_d21e1e09677c335f297cd7414137ebc3.bindPopup(popup_920922edd78703790ddc779358ce0599)
+        ;
+
+        
+    
+    
+            circle_marker_d21e1e09677c335f297cd7414137ebc3.bindTooltip(
+                `<div>
+                     Visakhapatnam: Cyclone 98% (High)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4be108ca5f02b0bc14d85ef351227831 = L.circleMarker(
+                [16.3067, 80.4365],
+                {"bubblingMouseEvents": true, "color": "#d7301f", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#d7301f", "fillOpacity": 0.55, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 23.642068881678743, "stroke": true, "weight": 1.5}
+            ).addTo(map_45d2910ebd0d6269ce84dce17dda2d0d);
+        
+    
+        var popup_90bd7a8df76dffc7d29840cbb73ab088 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_31c448cbe29fc9f9ae902147557d4bdd = $(`<div id="html_31c448cbe29fc9f9ae902147557d4bdd" style="width: 100.0%; height: 100.0%;">             <div style="font:13px/1.5 sans-serif;min-width:250px">               <b style="font-size:15px">Guntur</b>, AndhraPradesh<br>                              <table style="width:100%;margin:6px 0"><tr><td>Cyclone</td><td style='text-align:right'>98%</td></tr><tr><td>Flood</td><td style='text-align:right'>66%</td></tr><tr><td>Landslide</td><td style='text-align:right'>9%</td></tr><tr><td>Heatwave</td><td style='text-align:right'>1%</td></tr></table>               <b>Action:</b> Evacuate<br>               <b>Rescue / hospital surge:</b> 83%<br>               <b>Shelter:</b> Govt. Junior College Guntur<br>               <span style="color:#666">rain 101.6 mm &middot;               31.2 C &middot; wind 78.5 kmph</span>             </div></div>`)[0];
+                popup_90bd7a8df76dffc7d29840cbb73ab088.setContent(html_31c448cbe29fc9f9ae902147557d4bdd);
+            
+        
+
+        circle_marker_4be108ca5f02b0bc14d85ef351227831.bindPopup(popup_90bd7a8df76dffc7d29840cbb73ab088)
+        ;
+
+        
+    
+    
+            circle_marker_4be108ca5f02b0bc14d85ef351227831.bindTooltip(
+                `<div>
+                     Guntur: Cyclone 98% (High)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0f0553f8d532eae0bcffe28c7ef98423 = L.circleMarker(
+                [13.2172, 79.1003],
+                {"bubblingMouseEvents": true, "color": "#1a9850", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#1a9850", "fillOpacity": 0.12, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8.400586972305174, "stroke": true, "weight": 3}
+            ).addTo(map_45d2910ebd0d6269ce84dce17dda2d0d);
+        
+    
+        var popup_2381d709f74311bc4a8b78471267c14d = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_7598382cce863fc186da2198194d2ed5 = $(`<div id="html_7598382cce863fc186da2198194d2ed5" style="width: 100.0%; height: 100.0%;">             <div style="font:13px/1.5 sans-serif;min-width:250px">               <b style="font-size:15px">Chittoor</b>, AndhraPradesh<br>               <div style='color:#b26a00'>river gauge not reporting</div>               <table style="width:100%;margin:6px 0"><tr><td>Flood</td><td style='text-align:right'>3%</td></tr><tr><td>Landslide</td><td style='text-align:right'>2%</td></tr><tr><td>Cyclone</td><td style='text-align:right'>1%</td></tr><tr><td>Heatwave</td><td style='text-align:right'>0%</td></tr></table>               <b>Action:</b> Monitor<br>               <b>Rescue / hospital surge:</b> 5%<br>               <b>Shelter:</b> Govt. High School Chittoor<br>               <span style="color:#666">rain 7.7 mm &middot;               27.4 C &middot; wind 8.4 kmph</span>             </div></div>`)[0];
+                popup_2381d709f74311bc4a8b78471267c14d.setContent(html_7598382cce863fc186da2198194d2ed5);
+            
+        
+
+        circle_marker_0f0553f8d532eae0bcffe28c7ef98423.bindPopup(popup_2381d709f74311bc4a8b78471267c14d)
+        ;
+
+        
+    
+    
+            circle_marker_0f0553f8d532eae0bcffe28c7ef98423.bindTooltip(
+                `<div>
+                     Chittoor: Flood 3% (Low)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+</script>
+</html>

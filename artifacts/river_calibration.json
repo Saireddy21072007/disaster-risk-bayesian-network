@@ -1,0 +1,224 @@
+{
+ "9.850_76.968": {
+  "bankfull_discharge": 220.5,
+  "annual_maxima": [
+   142.6,
+   182.7,
+   211.3,
+   229.7,
+   256.0,
+   285.4
+  ],
+  "years": 6,
+  "window": "2020-01-01..2025-12-31",
+  "method": "median annual maximum (2-year return period)",
+  "computed_at": 1786362823.4248443
+ },
+ "13.083_80.271": {
+  "bankfull_discharge": null,
+  "years": 0,
+  "method": "no GloFAS river reach at this location",
+  "computed_at": 1786362827.6015027
+ },
+ "9.982_76.300": {
+  "bankfull_discharge": 103.97,
+  "annual_maxima": [
+   83.9,
+   92.3,
+   102.0,
+   105.9,
+   128.7,
+   146.9
+  ],
+  "years": 6,
+  "window": "2020-01-01..2025-12-31",
+  "method": "median annual maximum (2-year return period)",
+  "computed_at": 1786363783.9881651
+ },
+ "11.685_76.132": {
+  "bankfull_discharge": 13.02,
+  "annual_maxima": [
+   11.1,
+   12.7,
+   12.7,
+   13.3,
+   16.2,
+   21.7
+  ],
+  "years": 6,
+  "window": "2020-01-01..2025-12-31",
+  "method": "median annual maximum (2-year return period)",
+  "computed_at": 1786363794.7332213
+ },
+ "9.498_76.339": {
+  "bankfull_discharge": 7.48,
+  "annual_maxima": [
+   5.0,
+   6.9,
+   7.4,
+   7.6,
+   9.9,
+   11.6
+  ],
+  "years": 6,
+  "window": "2020-01-01..2025-12-31",
+  "method": "median annual maximum (2-year return period)",
+  "computed_at": 1786363799.804758
+ },
+ "10.528_76.214": {
+  "bankfull_discharge": 64.78,
+  "annual_maxima": [
+   47.5,
+   60.4,
+   63.4,
+   66.1,
+   71.8,
+   103.7
+  ],
+  "years": 6,
+  "window": "2020-01-01..2025-12-31",
+  "method": "median annual maximum (2-year return period)",
+  "computed_at": 1786363806.4324872
+ },
+ "11.259_75.780": {
+  "bankfull_discharge": 96.86,
+  "annual_maxima": [
+   53.1,
+   90.6,
+   94.7,
+   99.0,
+   110.2,
+   113.0
+  ],
+  "years": 6,
+  "window": "2020-01-01..2025-12-31",
+  "method": "median annual maximum (2-year return period)",
+  "computed_at": 1786363816.3035727
+ },
+ "11.017_76.956": {
+  "bankfull_discharge": 5.89,
+  "annual_maxima": [
+   5.0,
+   5.2,
+   5.7,
+   6.1,
+   6.6,
+   7.3
+  ],
+  "years": 6,
+  "window": "2020-01-01..2025-12-31",
+  "method": "median annual maximum (2-year return period)",
+  "computed_at": 1786363822.3606324
+ },
+ "11.410_76.695": {
+  "bankfull_discharge": 2.68,
+  "annual_maxima": [
+   2.1,
+   2.3,
+   2.3,
+   3.0,
+   4.4,
+   4.6
+  ],
+  "years": 6,
+  "window": "2020-01-01..2025-12-31",
+  "method": "median annual maximum (2-year return period)",
+  "computed_at": 1786363829.081964
+ },
+ "11.748_79.771": {
+  "bankfull_discharge": null,
+  "years": 0,
+  "method": "no GloFAS river reach at this location",
+  "computed_at": 1786363838.1020956
+ },
+ "9.925_78.120": {
+  "bankfull_discharge": 112.04,
+  "annual_maxima": [
+   46.0,
+   65.2,
+   98.3,
+   125.8,
+   189.6,
+   245.0
+  ],
+  "years": 6,
+  "window": "2020-01-01..2025-12-31",
+  "method": "median annual maximum (2-year return period)",
+  "computed_at": 1786363843.0213854
+ },
+ "8.714_77.757": {
+  "bankfull_discharge": 1410.03,
+  "annual_maxima": [
+   624.2,
+   992.1,
+   1051.0,
+   1769.1,
+   1944.4,
+   5860.4
+  ],
+  "years": 6,
+  "window": "2020-01-01..2025-12-31",
+  "method": "median annual maximum (2-year return period)",
+  "computed_at": 1786363847.967394
+ },
+ "16.506_80.648": {
+  "bankfull_discharge": 201.77,
+  "annual_maxima": [
+   73.1,
+   186.1,
+   201.3,
+   202.2,
+   270.6,
+   531.1
+  ],
+  "years": 6,
+  "window": "2020-01-01..2025-12-31",
+  "method": "median annual maximum (2-year return period)",
+  "computed_at": 1786363853.3679516
+ },
+ "17.687_83.219": {
+  "bankfull_discharge": 87.43,
+  "annual_maxima": [
+   51.8,
+   59.3,
+   85.9,
+   89.0,
+   89.8,
+   165.0
+  ],
+  "years": 6,
+  "window": "2020-01-01..2025-12-31",
+  "method": "median annual maximum (2-year return period)",
+  "computed_at": 1786363860.3902516
+ },
+ "16.307_80.436": {
+  "bankfull_discharge": 7.71,
+  "annual_maxima": [
+   3.4,
+   3.6,
+   4.5,
+   10.9,
+   12.2,
+   13.2
+  ],
+  "years": 6,
+  "window": "2020-01-01..2025-12-31",
+  "method": "median annual maximum (2-year return period)",
+  "computed_at": 1786363866.6696725
+ },
+ "13.217_79.100": {
+  "bankfull_discharge": 325.88,
+  "annual_maxima": [
+   109.4,
+   179.3,
+   205.1,
+   446.7,
+   458.2,
+   1157.8
+  ],
+  "years": 6,
+  "window": "2020-01-01..2025-12-31",
+  "method": "median annual maximum (2-year return period)",
+  "computed_at": 1786363876.134376
+ }
+}

@@ -1,0 +1,7 @@
+{
+ "soil_offset": 0.6667,
+ "river_offset": 2.2593,
+ "stationary_kl_to_static_marginal": 0.076879,
+ "method": "shifts of the soil and river ordered-logit cut-points, chosen so the chain's stationary distribution under climatological rainfall matches the static network's hydrology marginal",
+ "fitted_at": "2026-08-10T19:46:34"
+}

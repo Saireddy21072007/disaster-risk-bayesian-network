@@ -1,0 +1,87 @@
+{
+ "rows_total": 35072,
+ "districts": 16,
+ "window": "2019-01-01..2024-12-31",
+ "nodes": [
+  {
+   "node": "Season",
+   "parents": [],
+   "rows_used": 35072,
+   "min_cell_count": 35072,
+   "mean_abs_shift": 0.0321,
+   "max_abs_shift": 0.0481
+  },
+  {
+   "node": "Rainfall",
+   "parents": [
+    "Season"
+   ],
+   "rows_used": 35072,
+   "min_cell_count": 8832,
+   "mean_abs_shift": 0.2749,
+   "max_abs_shift": 0.6868
+  },
+  {
+   "node": "Temperature",
+   "parents": [
+    "Season"
+   ],
+   "rows_used": 35072,
+   "min_cell_count": 8832,
+   "mean_abs_shift": 0.1501,
+   "max_abs_shift": 0.3912
+  },
+  {
+   "node": "SeaSurfaceTemp",
+   "parents": [
+    "Season"
+   ],
+   "rows_used": 6921,
+   "min_cell_count": 1656,
+   "mean_abs_shift": 0.3511,
+   "max_abs_shift": 0.5551
+  },
+  {
+   "node": "Humidity",
+   "parents": [
+    "Rainfall"
+   ],
+   "rows_used": 35072,
+   "min_cell_count": 206,
+   "mean_abs_shift": 0.2621,
+   "max_abs_shift": 0.5479
+  },
+  {
+   "node": "PressureDrop",
+   "parents": [
+    "SeaSurfaceTemp"
+   ],
+   "rows_used": 6921,
+   "min_cell_count": 1363,
+   "mean_abs_shift": 0.1857,
+   "max_abs_shift": 0.297
+  },
+  {
+   "node": "WindSpeed",
+   "parents": [
+    "PressureDrop"
+   ],
+   "rows_used": 35056,
+   "min_cell_count": 17,
+   "mean_abs_shift": 0.1179,
+   "max_abs_shift": 0.3802
+  }
+ ],
+ "monsoon_rainfall_simulated": {
+  "Low": 0.0741,
+  "Moderate": 0.4987,
+  "Heavy": 0.4272
+ },
+ "monsoon_rainfall_observed": {
+  "Low": 0.8368,
+  "Moderate": 0.1524,
+  "Heavy": 0.0108
+ },
+ "observed_mean_daily_rainfall_mm": 5.7,
+ "observed_monsoon_mean_daily_rainfall_mm": 8.16
+}

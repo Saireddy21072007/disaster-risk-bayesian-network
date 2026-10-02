@@ -1,0 +1,8 @@
+{
+ "expert_edges": 29,
+ "learned_edges": 39,
+ "recovered_edges_ignoring_direction": 25,
+ "recovery_rate": 0.862,
+ "extra_edges": 14,
+ "shd": 31
+}

@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Multi-hazard Early Warning Console - 22AIE301</title>
+
+<!-- Leaflet from CDN. If the college wifi blocks it we fall back to the SVG map
+     drawn further down, so the demo never depends on the network. -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<style>
+  :root{
+    --bg:#0f1720; --panel:#17212b; --panel2:#1e2b38; --line:#2a3a4a;
+    --txt:#e8eef4; --muted:#93a4b5; --accent:#4aa3df;
+    --high:#d7301f; --med:#e8912a; --low:#2f9e5e;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font:14px/1.5 "Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--txt)}
+  header{padding:14px 22px;background:var(--panel);border-bottom:1px solid var(--line);
+         display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  header h1{font-size:17px;margin:0;font-weight:600}
+  header .sub{color:var(--muted);font-size:12px}
+  select,button,input{background:var(--panel2);color:var(--txt);border:1px solid var(--line);
+         border-radius:6px;padding:7px 10px;font:inherit}
+  button{cursor:pointer}
+  button:hover{border-color:var(--accent)}
+  button.mode{background:var(--panel2);color:var(--muted);padding:7px 12px}
+  button.mode.on{background:var(--accent);color:#fff;font-weight:600}
+  .srcrow{display:grid;grid-template-columns:1.1fr 0.8fr 1.3fr 0.7fr;gap:6px;
+          font-size:11.5px;padding:4px 0;border-bottom:1px solid var(--line);align-items:center}
+  .srcrow.head{color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-size:10px}
+  .mini{display:flex;height:6px;border-radius:3px;overflow:hidden;background:#22303d}
+  .mini>i{display:block;height:100%}
+  .badge{font-size:9.5px;padding:1px 5px;border-radius:3px;font-weight:600}
+  .b-ok{background:#1d4d33;color:#8fe0ae}
+  .b-stale{background:#4d431d;color:#e8d48f}
+  .b-disputed{background:#4d331d;color:#e8b48f}
+  .b-suspect{background:#4d1d1d;color:#e89b8f}
+  .b-model{background:#2b2d5c;color:#a9b4ff}
+  .wrap{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:14px;padding:14px}
+  @media (max-width:1050px){.wrap{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:14px}
+  .card h2{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);
+           margin:0 0 10px 0;font-weight:600}
+  #map,#svgmap{height:380px;border-radius:8px;background:#0b1218}
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+  .tile{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+  .tile .v{font-size:22px;font-weight:600}
+  .tile .k{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:6px 8px;text-align:left;border-bottom:1px solid var(--line)}
+  th{color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+  tr.row{cursor:pointer}
+  tr.row:hover td{background:var(--panel2)}
+  tr.sel td{background:#233242}
+  .pill{display:inline-block;padding:1px 8px;border-radius:20px;font-size:11px;font-weight:600;color:#fff}
+  .bar{height:7px;border-radius:4px;background:#22303d;overflow:hidden;min-width:70px}
+  .bar>i{display:block;height:100%}
+  .hz{display:grid;grid-template-columns:82px 1fr 46px;gap:8px;align-items:center;margin:5px 0}
+  .hz span:first-child{color:var(--muted);font-size:12px}
+  .hz b{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+  .expl{background:var(--panel2);border-left:3px solid var(--accent);padding:10px 12px;
+        border-radius:0 8px 8px 0;font-size:13px;line-height:1.65}
+  ul.clean{margin:6px 0 0 0;padding-left:18px}
+  ul.clean li{margin:3px 0}
+  .muted{color:var(--muted)}
+  .warn{color:#f0c04a}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .sliders label{display:block;font-size:12px;color:var(--muted);margin-top:8px}
+  .sliders input[type=range]{width:100%}
+  .tag{font-size:10px;border:1px solid var(--line);border-radius:4px;padding:1px 5px;color:var(--muted)}
+  footer{padding:10px 22px 28px;color:var(--muted);font-size:11.5px}
+  .legend{display:flex;gap:14px;font-size:12px;color:var(--muted);margin-top:8px;flex-wrap:wrap}
+  .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Multi-hazard Early Warning Console</h1>
+    <div class="sub">Bayesian network &rarr; explanation &rarr; recommended action &nbsp;|&nbsp;
+      22AIE301 Probabilistic Reasoning project</div>
+  </div>
+  <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+    <div id="modes" style="display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden">
+      <button class="mode on" data-mode="scenario" style="border:0;border-radius:0">Scenario</button>
+      <button class="mode"    data-mode="live"     style="border:0;border-radius:0">Live feeds</button>
+    </div>
+    <select id="scenario"></select>
+    <select id="livemode" style="display:none">
+      <option value="snapshot">replay last pull</option>
+      <option value="live">fetch now (slower)</option>
+    </select>
+    <button id="reload">Run assessment</button>
+  </div>
+</header>
+
+<!-- Shown when the page cannot reach the API. The usual cause is opening the
+     browser before uvicorn has finished starting, which used to leave the page
+     permanently half-initialised with no explanation. -->
+<div id="banner" style="display:none;margin:12px 14px 0;padding:11px 14px;
+     border:1px solid #a5442f;border-left:4px solid #d7301f;border-radius:8px;
+     background:#2a1c18;font-size:13px">
+  <b>Cannot reach the server.</b>
+  <span id="banner-msg"></span>
+  <button id="banner-retry" style="margin-left:10px">Retry now</button>
+</div>
+
+<div class="wrap">
+  <!-- ------------------------------- left column ------------------------- -->
+  <div>
+    <div class="card">
+      <h2>Risk map <span class="tag" id="maptag"></span></h2>
+      <div id="map"></div>
+      <svg id="svgmap" style="display:none" viewBox="0 0 600 380"></svg>
+      <div class="legend">
+        <span><i class="dot" style="background:var(--high)"></i>High (&ge;75%)</span>
+        <span><i class="dot" style="background:var(--med)"></i>Medium (40-75%)</span>
+        <span><i class="dot" style="background:var(--low)"></i>Low (&lt;40%)</span>
+        <span class="warn">hollow ring = a sensor is not reporting</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>District ranking</h2>
+      <div style="max-height:300px;overflow:auto">
+        <table>
+          <thead><tr>
+            <th>District</th><th>Top hazard</th><th>P(hazard)</th>
+            <th>Action</th><th>Confidence</th>
+          </tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Situation summary</h2>
+      <div class="tiles" id="tiles"></div>
+    </div>
+  </div>
+
+  <!-- ------------------------------- right column ------------------------ -->
+  <div>
+    <div class="card" id="detail">
+      <h2>Select a district</h2>
+      <p class="muted">Click any district on the map or in the ranking table to see
+        the probability for each hazard, why the model believes it, and the action
+        the decision network recommends.</p>
+    </div>
+
+    <div class="card">
+      <h2>Sandbox &ndash; type your own reading</h2>
+      <p class="muted" style="margin-top:-4px">Move a slider and the whole chain
+        re-runs: posterior, explanation, recommended action. Leave a slider at
+        &ldquo;not reported&rdquo; to see how the network copes with a dead sensor.</p>
+      <div class="sliders grid2" id="sliders"></div>
+      <div style="margin-top:10px"><button id="run-sandbox">Compute</button></div>
+      <div id="sandbox-out" style="margin-top:12px"></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Model: 18-node discrete Bayesian network, exact inference by variable elimination,
+  CPTs = Dirichlet posterior with elicited expert priors. Sensor values in the demo
+  come from a seeded scenario generator, not from a live feed.
+  &nbsp;|&nbsp; Sai Reddy A &middot; Rohit Vardhan M &middot; Jithin Reddy K &middot; Sai Vandith
+</footer>
+
+<script>
+const HAZARDS = ["Flood","Landslide","Cyclone","Heatwave"];
+const COLOUR  = {High:"#d7301f", Medium:"#e8912a", Low:"#2f9e5e"};
+let LAST = null, SELECTED = null, map = null, layer = null, useLeaflet = true;
+
+const pct  = v => (100*v).toFixed(0) + "%";
+const $    = id => document.getElementById(id);
+
+/* ------------------------------------------------------------------ startup */
+
+/* Set up the map exactly once. This used to live inline in init(), which meant
+   that if init() failed early the map was never created and every later
+   drawMap() threw on a null layer - the page looked alive (tiles filled in) but
+   the map stayed black and the ranking stuck on its placeholder. Now it is
+   idempotent and callable from anywhere. */
+function ensureMap(){
+  if (map || layer) return;
+  useLeaflet = (typeof L !== "undefined");
+  if (useLeaflet){
+    map = L.map("map",{scrollWheelZoom:true}).setView([12.4,78.5],6);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      {maxZoom:12, attribution:"&copy; OpenStreetMap contributors"}).addTo(map);
+    layer = L.layerGroup().addTo(map);
+    $("maptag").textContent = "Leaflet + OpenStreetMap";
+  } else {
+    // the Leaflet CDN is blocked or slow - use the built-in projection instead
+    $("map").style.display = "none";
+    $("svgmap").style.display = "block";
+    $("maptag").textContent = "offline fallback projection";
+  }
+}
+
+function showBanner(msg){
+  $("banner-msg").textContent = msg || "";
+  $("banner").style.display = "block";
+}
+function hideBanner(){ $("banner").style.display = "none"; }
+
+/* Wait for the API to actually answer. run.bat opens the browser as soon as it
+   can, and on a cold start uvicorn needs a few seconds to import pgmpy and build
+   the junction tree, so the first request can legitimately be refused. Retrying
+   is the difference between "it works" and "it is silently broken forever". */
+async function waitForServer(tries = 40){
+  for (let i = 0; i < tries; i++){
+    try {
+      const r = await fetch("/api/health", {cache:"no-store"});
+      if (r.ok){ hideBanner(); return true; }
+    } catch (e) { /* not up yet */ }
+    if (i === 1) showBanner("Waiting for it to finish starting up…");
+    await new Promise(r => setTimeout(r, 500 + i * 150));
+  }
+  showBanner("Gave up after ~30 s. Is the server window still open? "
+           + "Start it with run.bat and choose option 2.");
+  return false;
+}
+
+async function init(){
+  ensureMap();
+  buildSliders();
+
+  if (!await waitForServer()) return;
+
+  try {
+    const s = await (await fetch("/api/scenarios")).json();
+    $("scenario").innerHTML = s.scenarios
+      .map(x => `<option value="${x.id}">${x.label}</option>`).join("");
+  } catch (e) {
+    showBanner("Could not load the scenario list: " + e.message);
+    return;
+  }
+  await reload();
+}
+
+$("banner-retry").onclick = async () => { hideBanner(); await init(); };
+
+$("reload").onclick = reload;
+$("scenario").onchange = reload;
+$("livemode").onchange = reload;
+
+let MODE = "scenario";
+document.querySelectorAll("button.mode").forEach(b => b.onclick = () => {
+  MODE = b.dataset.mode;
+  document.querySelectorAll("button.mode").forEach(x =>
+    x.classList.toggle("on", x === b));
+  $("scenario").style.display = MODE === "scenario" ? "" : "none";
+  $("livemode").style.display = MODE === "live" ? "" : "none";
+  reload();
+});
+
+/* Monotonically increasing token. A slow "fetch now" pass must not overwrite the
+   results of a faster pass the user started afterwards. */
+let RELOAD_TOKEN = 0;
+
+async function reload(){
+  const token = ++RELOAD_TOKEN;
+  const stale = () => token !== RELOAD_TOKEN;
+  ensureMap();
+  $("rows").innerHTML = `<tr><td colspan="5" class="muted">running inference…</td></tr>`;
+
+  let data;
+  try {
+    if (MODE === "live"){
+      const lm = $("livemode").value;
+      if (lm === "live")
+        $("rows").innerHTML = `<tr><td colspan="5" class="muted">fetching live
+          feeds for 16 districts, this takes up to a minute…</td></tr>`;
+      const r = await fetch("/api/live/overview?mode="+lm);
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      data = await r.json();
+      // the live record already carries most of the same fields; normalise the two
+      // that differ so the map and the table can stay shared
+      data.districts.forEach(d => {
+        d.notes = (d.errors || []).join("; ");
+        d.displayAction = d.alert_level;
+      });
+    } else {
+      const sc = $("scenario").value;
+      const r = await fetch("/api/overview?scenario="+encodeURIComponent(sc));
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      data = await r.json();
+      data.districts.forEach(d => {
+        d.displayAction = (d.recommendation
+                           && (d.recommendation.action_label
+                               || d.recommendation.action)) || "-";
+      });
+    }
+  } catch (e) {
+    if (stale()) return;
+    $("rows").innerHTML = `<tr><td colspan="5" class="muted">could not load: `
+                        + e.message + `</td></tr>`;
+    showBanner("The last request failed: " + e.message);
+    return;
+  }
+
+  if (stale()) return;            // a newer request already won
+  LAST = data;
+  hideBanner();
+
+  // draw each panel independently, so one bad panel cannot leave the others
+  // stuck on a placeholder the way it used to
+  for (const [name, fn] of [["tiles", drawTiles], ["table", drawTable],
+                            ["map", drawMap]]){
+    try { fn(); }
+    catch (e) { console.error("failed to draw " + name, e); }
+  }
+  if (LAST.districts.length) showDetail(LAST.districts[0].district);
+}
+
+/* -------------------------------------------------------------------- tiles */
+function drawTiles(){
+  const s = LAST.summary;
+  let t;
+  if (MODE === "live"){
+    const a = s.alert_levels;
+    t = [
+      ["Evacuation advised", a.Evacuate, COLOUR.High],
+      ["Prepare / stage teams", a.Prepare, COLOUR.Medium],
+      ["Live readings this pass", s.readings_total, null],
+      ["Feeds degraded", s.feeds_degraded, s.feeds_degraded ? COLOUR.Medium : null],
+      ["Model surprises", s.model_surprises, s.model_surprises ? COLOUR.Medium : null],
+      ["Expected people needing help",
+       s.expected_people_needing_help.toLocaleString("en-IN"), null],
+    ];
+  } else {
+    const a = s.actions;
+    t = [
+      ["High-risk districts", s.band_counts.High, COLOUR.High],
+      ["Medium", s.band_counts.Medium, COLOUR.Medium],
+      ["Evacuation advised", a.Evacuate, COLOUR.High],
+      ["Prepare / stage teams", a.Prepare, COLOUR.Medium],
+      ["Expected people needing help", s.expected_people_needing_help.toLocaleString("en-IN"), null],
+    ];
+  }
+  $("tiles").innerHTML = t.map(([k,v,c]) =>
+    `<div class="tile"><div class="v" ${c?`style="color:${c}"`:""}>${v}</div>
+     <div class="k">${k}</div></div>`).join("");
+}
+
+/* -------------------------------------------------------------------- table */
+function drawTable(){
+  $("rows").innerHTML = LAST.districts.map(d => {
+    const p = d.hazards[d.dominant_hazard];
+    return `<tr class="row ${SELECTED===d.district?"sel":""}" data-d="${d.district}">
+      <td>${d.district}<div class="muted" style="font-size:11px">${d.state}</div></td>
+      <td>${d.dominant_hazard}</td>
+      <td><div class="bar"><i style="width:${100*p}%;background:${COLOUR[d.risk_band]}"></i></div>
+          <span class="muted" style="font-size:11px">${pct(p)}</span></td>
+      <td><span class="pill" style="background:${COLOUR[d.risk_band]}">${
+          d.displayAction}</span></td>
+      <td class="muted">${d.confidence.label}${d.notes?' <span class="warn">*</span>':''}</td>
+    </tr>`;
+  }).join("");
+  document.querySelectorAll("tr.row").forEach(tr =>
+    tr.onclick = () => showDetail(tr.dataset.d));
+}
+
+/* ---------------------------------------------------------------------- map */
+function drawMap(){
+  ensureMap();
+  if (useLeaflet && layer){
+    layer.clearLayers();
+    LAST.districts.forEach(d => {
+      const p = d.hazards[d.dominant_hazard];
+      const m = L.circleMarker([d.lat,d.lon],{
+        radius: 8 + 16*p,
+        color: COLOUR[d.risk_band],
+        weight: d.notes ? 3 : 1.5,
+        fillOpacity: d.notes ? 0.10 : 0.55,
+        fillColor: COLOUR[d.risk_band]
+      }).addTo(layer);
+      m.bindTooltip(`<b>${d.district}</b><br>${d.dominant_hazard} ${pct(p)}
+                     <br>${d.displayAction}`);
+      m.on("click", () => showDetail(d.district));
+    });
+  } else {
+    drawSvgMap();
+  }
+}
+
+function drawSvgMap(){
+  const ds = LAST.districts;
+  const lats = ds.map(d=>d.lat), lons = ds.map(d=>d.lon);
+  const pad = 44, W = 600, H = 380;
+  const x = v => pad + (v - Math.min(...lons))/(Math.max(...lons)-Math.min(...lons)) * (W-2*pad);
+  const y = v => H - pad - (v - Math.min(...lats))/(Math.max(...lats)-Math.min(...lats)) * (H-2*pad);
+  $("svgmap").innerHTML = ds.map(d => {
+    const p = d.hazards[d.dominant_hazard];
+    return `<g class="pt" style="cursor:pointer" data-d="${d.district}">
+      <circle cx="${x(d.lon)}" cy="${y(d.lat)}" r="${5+13*p}"
+              fill="${COLOUR[d.risk_band]}" fill-opacity="${d.notes?0.12:0.55}"
+              stroke="${COLOUR[d.risk_band]}" stroke-width="${d.notes?3:1.5}"/>
+      <text x="${x(d.lon)+10+13*p}" y="${y(d.lat)+4}" fill="#93a4b5"
+            font-size="9">${d.district}</text></g>`;
+  }).join("");
+  document.querySelectorAll("#svgmap .pt").forEach(g =>
+    g.onclick = () => showDetail(g.dataset.d));
+}
+
+/* ------------------------------------------------------------------- detail */
+async function showDetail(name){
+  SELECTED = name; drawTable();
+  $("detail").innerHTML = `<h2>${name}</h2><p class="muted">computing explanation…</p>`;
+  if (MODE === "live"){
+    const d = await (await fetch("/api/live/district",{
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({district: name, mode: $("livemode").value})
+    })).json();
+    $("detail").innerHTML = liveDetailHtml(d);
+  } else {
+    const d = await (await fetch("/api/district",{
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({scenario: $("scenario").value, district: name})
+    })).json();
+    $("detail").innerHTML = detailHtml(d);
+  }
+}
+
+const BADGE = {ok:"b-ok", stale:"b-stale", disputed:"b-disputed",
+               suspect:"b-suspect", "model-surprise":"b-model"};
+
+function likelihoodBar(lik){
+  const cols = ["#2f9e5e","#e8912a","#d7301f","#8b1a1a"];
+  const ks = Object.keys(lik);
+  return `<div class="mini">${ks.map((k,i)=>
+    `<i style="width:${100*lik[k]}%;background:${cols[i%cols.length]}"
+        title="${k} ${pct(lik[k])}"></i>`).join("")}</div>`;
+}
+
+function liveDetailHtml(d){
+  const r = d.recommendation, e = d.explanation, f = d.filter_step;
+
+  const readings = d.readings.map(x => `
+    <div class="srcrow">
+      <div>${x.node}
+        <div class="muted" style="font-size:10px">${(+x.estimate).toFixed(1)}
+          ${x.n_sources>1?`· ${x.n_sources} src · spread ${(+x.ensemble_spread).toFixed(1)}`
+                         :`· ${x.sources[0]}`}</div></div>
+      <div><span class="badge ${BADGE[x.status]||'b-ok'}">${x.status}</span>
+        <div class="muted" style="font-size:10px">${Math.round(x.age_minutes)} min old</div></div>
+      <div>${likelihoodBar(x.likelihood)}
+        <div class="muted" style="font-size:10px">most likely
+          ${x.most_likely_state}</div></div>
+      <div class="muted" style="font-size:10px">trust ${x.trust_weight}
+        ${x.surprisal_bits!=null?`<br>${x.surprisal_bits} bits`:""}</div>
+    </div>`).join("");
+
+  const gate = (d.gate_events||[]).map(g => `<li>
+      <b>${g.node}</b> at ${(+g.estimate).toFixed(1)} was ${g.surprisal_bits} bits surprising &mdash;
+      ${g.action}</li>`).join("");
+
+  const nv = d.naive_comparison || {};
+  const gap = nv.dominant_gap;
+
+  return `
+  <h2>${d.district}, ${d.state}
+    <span class="pill" style="background:${COLOUR[d.risk_band]};float:right">
+      ${d.alert_level}</span></h2>
+  <div class="muted" style="font-size:11.5px;margin-bottom:10px">
+    live pass at ${d.timestamp.replace("T"," ")} &middot;
+    ${d.readings.length} readings
+    ${d.errors.length?`&middot; <span class="warn">${d.errors.join("; ")}</span>`:""}
+  </div>
+
+  ${hazardBars(d.hazards)}
+
+  <div style="margin:12px 0 4px"><span class="tag">consequences</span>
+    road blocked ${pct(d.consequences.RoadBlocked.Yes)} &middot;
+    rescue needed ${pct(d.consequences.RescueNeeded.Yes)} &middot;
+    hospital demand high ${pct(d.consequences.HospitalDemand.High)}</div>
+
+  <h2 style="margin-top:16px">Live evidence</h2>
+  <div class="srcrow head"><div>Quantity / value</div><div>Status / age</div>
+    <div>Likelihood over bins</div><div>Trust</div></div>
+  ${readings}
+  <div class="muted" style="font-size:11px;margin-top:6px">
+    Each bar is a likelihood, not a decision: a reading near a bin edge, or one the
+    forecast models disagree about, deliberately spreads its mass.</div>
+
+  <h2 style="margin-top:16px">Tracked catchment (filter)</h2>
+  <div class="hz"><span>Soil wet</span>
+    <div class="bar"><i style="width:${100*f.soil.High}%;background:#7b3294"></i></div>
+    <b>${pct(f.soil.High)}</b></div>
+  <div class="hz"><span>River high</span>
+    <div class="bar"><i style="width:${100*f.river.High}%;background:#7b3294"></i></div>
+    <b>${pct(f.river.High)}</b></div>
+  <div class="muted" style="font-size:11px">
+    ${f.coasted ? "no hydrology reading this pass &mdash; the filter is coasting on its prediction"
+                : "updated from: " + f.used_readings.join(", ")}</div>
+
+  ${gate?`<h2 style="margin-top:16px">Data-quality gate</h2>
+    <ul class="clean">${gate}</ul>`:""}
+
+  <h2 style="margin-top:16px">Why (${d.dominant_hazard})</h2>
+  <div class="expl">${e.text}</div>
+  <ul class="clean">${(e.bullets||[]).map(b=>`<li>${b}</li>`).join("")}</ul>
+
+  <h2 style="margin-top:16px">Recommended action</h2>
+  <div class="muted" style="font-size:12.5px;margin-bottom:6px">${r.rationale}</div>
+  <div style="font-size:12.5px;margin-bottom:8px">
+    Raw recommendation <b>${d.raw_action}</b>, holding <b>${d.alert_level}</b>
+    &mdash; <span class="muted">${d.hysteresis.reason}</span></div>
+  <ul class="clean">${r.checklist.map(c=>`<li>${c}</li>`).join("")}</ul>
+
+  ${gap!=null?`<div class="muted" style="font-size:11.5px;margin-top:10px">
+    Hard binning the same feed would have said
+    ${pct(nv.hard_hazards[d.dominant_hazard])} for ${d.dominant_hazard}, against
+    our ${pct(nv.soft_hazards[d.dominant_hazard])}
+    (${gap>0?"+":""}${(100*gap).toFixed(1)} points).</div>`:""}`;
+}
+
+function hazardBars(h, band){
+  return HAZARDS.map(k => {
+    const v = h[k], c = v>=0.75?COLOUR.High : v>=0.40?COLOUR.Medium : COLOUR.Low;
+    return `<div class="hz"><span>${k}</span>
+      <div class="bar"><i style="width:${100*v}%;background:${c}"></i></div>
+      <b>${pct(v)}</b></div>`;
+  }).join("");
+}
+
+function detailHtml(d){
+  const r = d.recommendation, e = d.explanations[d.dominant_hazard];
+  const read = d.reading;
+  const sensorLine = [
+    read.rainfall_mm!=null?`rain ${read.rainfall_mm} mm`:null,
+    read.river_level_frac!=null?`river ${(100*read.river_level_frac).toFixed(0)}% of danger level`:'<span class="warn">river gauge offline</span>',
+    read.temperature_c!=null?`${read.temperature_c} &deg;C`:null,
+    read.humidity_pct!=null?`RH ${read.humidity_pct}%`:null,
+    read.wind_kmph!=null?`wind ${read.wind_kmph} kmph`:null,
+  ].filter(Boolean).join(" &middot; ");
+
+  const voi = e.value_of_information.filter(v=>v.expected_bits_gained>0.01);
+
+  return `
+  <h2>${d.district}, ${d.state}
+    <span class="pill" style="background:${COLOUR[d.risk_band]};float:right">
+      ${r.action_label || r.action}</span></h2>
+  <div class="muted" style="font-size:12px;margin-bottom:10px">${sensorLine}</div>
+
+  ${hazardBars(d.hazards)}
+
+  <div style="margin:12px 0 4px"><span class="tag">consequences</span>
+    road blocked ${pct(d.consequences.RoadBlocked.Yes)} &middot;
+    rescue needed ${pct(d.consequences.RescueNeeded.Yes)} &middot;
+    hospital demand high ${pct(d.consequences.HospitalDemand.High)}</div>
+
+  ${Object.keys(d.latent_map).length ? `<div class="muted" style="font-size:12px">
+    inferred hidden state: ${Object.entries(d.latent_map)
+      .map(([k,v])=>`${k} = <b>${v}</b>`).join(", ")}</div>`:""}
+
+  <h2 style="margin-top:16px">Why (${d.dominant_hazard})</h2>
+  <div class="expl">${e.text}</div>
+  <ul class="clean">${e.bullets.map(b=>`<li>${b}</li>`).join("")}</ul>
+
+  ${e.counterfactuals.length?`<h2 style="margin-top:14px">Counterfactual</h2>
+    <ul class="clean">${e.counterfactuals.map(c=>`<li>${c.sentence}</li>`).join("")}</ul>`:""}
+
+  ${voi.length?`<h2 style="margin-top:14px">Worth measuring next</h2>
+    <ul class="clean">${voi.map(v=>`<li>${v.sensor}
+      &mdash; would remove ${v.expected_bits_gained.toFixed(2)} bits of
+      uncertainty</li>`).join("")}</ul>`:""}
+
+  <h2 style="margin-top:16px">Recommended action</h2>
+  <div class="muted" style="font-size:12.5px;margin-bottom:8px">${r.rationale}</div>
+  <table><thead><tr><th>Action</th><th>Expected utility</th>
+    <th>Cost if quiet</th><th>Cost if emergency</th></tr></thead><tbody>
+    ${r.expected_utility_table.map((t,i)=>`<tr${i===0?' class="sel"':''}>
+      <td>${t.action}</td><td>${t.expected_utility}</td>
+      <td>${t.cost_if_nothing_happens}</td><td>${t.cost_if_emergency}</td></tr>`).join("")}
+  </tbody></table>
+  <ul class="clean" style="margin-top:8px">${r.checklist.map(c=>`<li>${c}</li>`).join("")}</ul>
+  <div class="muted" style="font-size:11.5px;margin-top:8px">
+    Shelter on record: ${d.nearest_shelter}. Exposed population (12% planning
+    figure): ${(r.exposed_population||0).toLocaleString("en-IN")}.
+    EVPI at this probability: ${r.evpi} cost units &mdash; that is what a perfect
+    forecast would be worth here.</div>`;
+}
+
+/* ------------------------------------------------------------------ sandbox */
+const SLIDERS = [
+  ["rainfall_mm","Rainfall (mm/24h)",0,220,1,85],
+  ["river_level_frac","River level (fraction of danger level)",0,1.4,0.01,0.8],
+  ["temperature_c","Temperature (C)",18,48,0.5,29],
+  ["humidity_pct","Humidity (%)",15,100,1,85],
+  ["wind_kmph","Wind (kmph)",0,180,1,25],
+  ["sst_c","Sea surface temp (C)",24,32,0.1,28.6],
+  ["pressure_drop_hpa","24h pressure drop (hPa)",0,20,0.5,2],
+  ["slope_deg","Terrain slope (deg)",0,40,1,25],
+];
+
+function buildSliders(){
+  $("sliders").innerHTML = SLIDERS.map(([k,lab,mn,mx,st,def]) => `
+    <div><label>${lab}
+      <span class="muted" id="v-${k}">${def}</span>
+      <input type="checkbox" id="off-${k}" title="mark this sensor as not reporting">
+      <span class="muted" style="font-size:10px">offline</span></label>
+      <input type="range" id="s-${k}" min="${mn}" max="${mx}" step="${st}" value="${def}">
+    </div>`).join("") + `
+    <div><label>Season</label>
+      <select id="s-season"><option>Monsoon</option><option>Summer</option>
+      <option>Winter</option></select></div>
+    <div><label>Land use</label>
+      <select id="s-urban"><option>Low</option><option>High</option></select></div>`;
+  SLIDERS.forEach(([k]) => {
+    $("s-"+k).oninput = e => { $("v-"+k).textContent = e.target.value; };
+  });
+}
+
+$("run-sandbox").onclick = async () => {
+  const body = {season: $("s-season").value, urbanisation: $("s-urban").value,
+                population: 2000000, district: "Sandbox"};
+  SLIDERS.forEach(([k]) => {
+    if (!$("off-"+k).checked) body[k] = parseFloat($("s-"+k).value);
+  });
+  const d = await (await fetch("/api/predict",{
+    method:"POST", headers:{"Content-Type":"application/json"},
+    body: JSON.stringify(body)})).json();
+  const e = d.explanations[d.dominant_hazard], r = d.recommendation;
+  $("sandbox-out").innerHTML = `
+    ${hazardBars(d.hazards)}
+    <div class="expl" style="margin-top:8px">${e.text}</div>
+    <div style="margin-top:8px">Action:
+      <span class="pill" style="background:${COLOUR[d.risk_band]}">${
+        r.action_label || r.action}</span>
+      <span class="muted" style="font-size:12px">&nbsp;${r.rationale}</span></div>`;
+};
+
+init();
+</script>
+</body>
+</html>

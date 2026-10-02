@@ -15,7 +15,7 @@ import pytest
 
 from src.config import STATES
 from src.engine import RiskEngine, entropy
-from src.feeds import Observation, SnapshotFeed, load_snapshot
+from src.feeds import IST, Observation, SnapshotFeed, load_snapshot
 from src.learn import load_model
 from src.measurement import (HYDRO_NODES, SOFT_NODES, SoftEvidenceEngine,
                              bin_likelihood, fuse_observations,
@@ -32,7 +32,7 @@ NOW = datetime(2026, 8, 10, 12, 0, 0)
 
 
 def _obs(node, column, value, source, unit="", age_minutes=5):
-    ts = datetime.now().isoformat()
+    ts = datetime.now(IST).isoformat()  # tz-aware: naive times were read as IST and went stale on UTC machines
     o = Observation(node=node, column=column, value=value, source=source,
                     observed_at=ts, fetched_at=ts, unit=unit)
     return o

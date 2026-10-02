@@ -1,0 +1,17 @@
+district,state,lat,lon,population,slope_deg,urbanisation,coastal,coast_side,major_river,nearest_shelter
+Ernakulam,Kerala,9.9816,76.2999,3282388,6.5,High,1,west,Periyar,Govt. Higher Secondary School Kalamassery
+Idukki,Kerala,9.8497,76.9681,1108974,27.4,Low,0,none,Periyar,Govt. Tribal School Kattappana
+Wayanad,Kerala,11.6854,76.132,817420,24.8,Low,0,none,Kabini,Govt. College Mananthavady
+Alappuzha,Kerala,9.4981,76.3388,2127789,3.1,High,1,west,Pamba,Municipal Town Hall Alappuzha
+Thrissur,Kerala,10.5276,76.2144,3121200,8.2,High,1,west,Bharathapuzha,Govt. Model Boys School Thrissur
+Kozhikode,Kerala,11.2588,75.7804,3086293,9.4,High,1,west,Chaliyar,Govt. Girls HSS Kozhikode
+Coimbatore,TamilNadu,11.0168,76.9558,3458045,12.1,High,0,none,Noyyal,Corporation School Peelamedu
+Nilgiris,TamilNadu,11.4102,76.695,735394,29.6,Low,0,none,Bhavani,Govt. Arts College Ooty
+Chennai,TamilNadu,13.0827,80.2707,4646732,2.4,High,1,east,Adyar,Chennai Corporation Community Hall
+Cuddalore,TamilNadu,11.748,79.7714,2605914,3.8,Low,1,east,Gadilam,Govt. Boys HSS Cuddalore
+Madurai,TamilNadu,9.9252,78.1198,3038252,7.6,High,0,none,Vaigai,Govt. Rajaji Hospital Annex
+Tirunelveli,TamilNadu,8.7139,77.7567,3077233,11.3,Low,0,none,Thamirabarani,Govt. HSS Palayamkottai
+Krishna,AndhraPradesh,16.5062,80.648,4517398,4.2,High,1,east,Krishna,Govt. Polytechnic Vijayawada
+Visakhapatnam,AndhraPradesh,17.6868,83.2185,4290589,14.7,High,1,east,Sarada,AU Engineering College Hostel
+Guntur,AndhraPradesh,16.3067,80.4365,4887813,5.0,High,1,east,Krishna,Govt. Junior College Guntur
+Chittoor,AndhraPradesh,13.2172,79.1003,4174064,13.9,Low,0,none,Swarnamukhi,Govt. High School Chittoor

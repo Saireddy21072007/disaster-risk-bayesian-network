@@ -1,0 +1,32 @@
+# 22AIE301 project - Multi-hazard disaster prediction
+# tested on Python 3.12 (works on 3.11 too)
+
+# probabilistic modelling
+pgmpy>=1.1.0
+networkx>=3.0
+numpy>=1.26
+pandas>=2.0
+
+# baselines and metrics for the evaluation section
+scikit-learn>=1.4
+
+# figures
+matplotlib>=3.8
+
+# API + dashboard
+fastapi>=0.110
+uvicorn>=0.27
+pydantic>=2.0
+
+# live sensor feeds (Open-Meteo weather / flood / marine - no API key needed)
+requests>=2.31
+
+# standalone map export
+folium>=0.15
+
+# slide deck generator (report/make_ppt.py)
+python-pptx>=1.0
+
+# tests
+pytest>=8.0
+httpx>=0.27

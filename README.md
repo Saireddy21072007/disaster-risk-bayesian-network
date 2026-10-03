@@ -55,7 +55,7 @@ real-time data feed?"* Both halves were fair. See
 * the **weather layer of the model is re-estimated from 35,072 real district-days**
   (16 districts, 2019–2024) instead of from our simulator;
 * readings enter as **soft (virtual) evidence** whose width is measured from the
-  disagreement between the three forecast models, not chosen by us;
+  disagreement between the three forcast models, not chosen by us;
 * the hydrology is tracked with a **recursive Bayesian filter** (a two-slice DBN), so
   rainfall accumulates across days — this also removes the "model is static"
   limitation we listed last time;

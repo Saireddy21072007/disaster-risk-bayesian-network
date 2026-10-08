@@ -300,4 +300,3 @@ convention · pgmpy.
 
 ## Data credits
 
-Weather and marine data © Open-Meteo (CC BY 4.0); river discharge from Copernicus GloFAS via Open-Meteo.

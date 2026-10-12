@@ -325,18 +325,3 @@ def live_provenance():
     return out
 
 
-@app.get("/api/live/audit")
-def live_audit(limit: int = 40):
-    """Tail of the append-only alert log, so any warning can be reviewed after the
-    event together with the evidence that produced it."""
-    from src.stream import AUDIT_LOG
-    if not AUDIT_LOG.exists():
-        return {"entries": []}
-    lines = AUDIT_LOG.read_text(encoding="utf-8").strip().splitlines()
-    entries = []
-    for line in lines[-max(limit, 1):]:
-        try:
-            entries.append(json.loads(line))
-        except json.JSONDecodeError:
-            continue
-    return {"entries": list(reversed(entries)), "total": len(lines)}

@@ -215,3 +215,8 @@ echo.
 pause
 exit /b 1
 
+:done
+echo.
+REM only pause if we were double-clicked (no argument on the command line)
+if "%~1"=="" pause
+exit /b 0

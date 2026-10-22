@@ -295,9 +295,6 @@ convention · pgmpy.
 
 ## What I learned
 
-* Discretisation has a real cost (~0.03 AUC) and creates bin-edge artefacts; it buys robustness to missing data and exact, explainable inference.
-* Checking a simulator against real observations matters: ours overestimated heavy-rain days 36x.
-* Soft evidence with a measured sigma is a cleaner way to fuse disagreeing forecast models than picking one.
 
 ## Data credits
 

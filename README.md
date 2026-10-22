@@ -293,8 +293,6 @@ Evidence* (1985) · Howard & Matheson, *Influence Diagrams* (1984) · IMD 24-hou
 rainfall classification and heat-wave criteria · CWC warning/danger level
 convention · pgmpy.
 
-## What I learned
-
 
 ## Data credits
 

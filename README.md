@@ -4,6 +4,11 @@
 ![python](https://img.shields.io/badge/python-3.10%E2%80%933.12-blue)
 ![pgmpy](https://img.shields.io/badge/inference-pgmpy-informational)
 
+A discrete Bayesian network (18 nodes, exact inference) that turns one district's
+live weather and river readings into flood / landslide / cyclone / heatwave
+probabilities, a plain-language explanation, a confidence statement, and a
+recommended action chosen by maximum expected utility. It runs on live public
+feeds (Open-Meteo, GloFAS) with no API key, and keeps working when sensors drop out.
 
 
 > **Course project** — 22AIE301 Probabilistic Reasoning, Amrita Vishwa Vidyapeetham, Coimbatore.

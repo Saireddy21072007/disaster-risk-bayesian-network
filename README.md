@@ -174,6 +174,8 @@ tests/             85 pytest tests, no network or API key needed
 
 ## The honest bit about the data
 
+There are two datasets, used for two different jobs, and we are precise about which
+is which.
 
 **Real** — `data/observed_weather.csv`: 35,072 district-days (16 districts,
 2019–2024) from the archive versions of the three live services. Used to re-estimate

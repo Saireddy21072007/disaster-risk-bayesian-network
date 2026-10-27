@@ -18,10 +18,6 @@ feeds (Open-Meteo, GloFAS) with no API key, and keeps working when sensors drop 
 
 ## Why a Bayesian network and not a classifier
 
-District sensor networks lose readings all the time. A classifier has to impute
-what it didn't see; a BN marginalises it out. On held-out data, gradient boosting
-and logistic regression beat the BN by ~0.03 AUC when every sensor reports — and
-lose to it once roughly a quarter of readings are missing:
 
 ![missing sensors](artifacts/missing_sensors.png)
 

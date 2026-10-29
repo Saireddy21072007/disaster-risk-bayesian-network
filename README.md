@@ -45,7 +45,7 @@ flowchart LR
 
 Python · pgmpy · NumPy / pandas · scikit-learn (baselines) · FastAPI · Leaflet / Folium · pytest
 
-## Real-time layer (added after the first review)
+
 
 The reviewer's feedback was: *"It is mentioned real-time sensor data, but you are choosing the
 existing preprocessed data? Also, what methods are you incorporating to process the

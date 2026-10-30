@@ -281,6 +281,9 @@ probability on a dry January day.
   because 4.0 hPa is a bin edge;
 * "people at risk" uses a flat 12% exposure fraction per district, standing in
   for real flood-plain and slope-zone population overlays.
+ 
+ Fixed since the zeroth review: the model is no longer static (recursive filter), and
+the weather CPTs are no longer our own invention.
 
 
 ## References
